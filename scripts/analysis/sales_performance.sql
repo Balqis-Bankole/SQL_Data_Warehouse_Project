@@ -1,5 +1,5 @@
 /* ======================================================================================
-  SALES PERFORMANCE ANALYSIS
+   SALES PERFORMANCE ANALYSIS
 
    Business Question:
    How is the company's sales performance changing over time?
