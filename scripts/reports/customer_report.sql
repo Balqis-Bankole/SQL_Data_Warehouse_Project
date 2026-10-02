@@ -27,12 +27,12 @@ customer_number,
 customer_name,
 age,
 COUNT(DISTINCT order_number) total_orders,
-SUM(sales_amount) total_sales,
+SUM(sales_amount) total_revenue,
 SUM(quantity) total_quantity,
 COUNT(DISTINCT product_key) total_products,
 MAX(order_date) last_order_date,
 EXTRACT('YEAR' FROM AGE(MAX(order_date),MIN(order_date))) * 12 
-+ EXTRACT('Month' FROM AGE(MAX(order_date),MIN(order_date)))lifespan
++ EXTRACT('Month' FROM AGE(MAX(order_date),MIN(order_date))) observed_lifespan
 FROM base_query
 GROUP BY 
     customer_key,
@@ -60,21 +60,21 @@ CASE WHEN age >= 12 AND total_sales > 5000 THEN 'VIP'
 END customer_segment,
 last_order_date,
 total_orders,
-total_sales,
+total_revenue,
 total_quantity,
 total_products,
-lifespan,
+observed_lifespan,
 ---compute recency
 EXTRACT(YEAR FROM AGE('2014-01-28', last_order_date))* 12 
 + EXTRACT(MONTH FROM AGE('2014-01-28', last_order_date)) recency,
 
 ---compute average order value (aov)
 CASE WHEN total_orders = 0 THEN 0
-    ELSE total_sales/total_orders 
+    ELSE total_revenue/total_orders 
 END average_order_value,
 
 ---compute average monthly spend  
-CASE WHEN lifespan = 0 THEN total_sales
+CASE WHEN observed_lifespan = 0 THEN total_sales
     ELSE ROUND(total_sales/lifespan,2)
 END average_monthly_spend
 FROM  customer_segregation
