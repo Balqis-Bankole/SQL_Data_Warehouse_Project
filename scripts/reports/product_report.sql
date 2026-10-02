@@ -1,4 +1,4 @@
-CREATE VIEW gold.report_products AS
+CREATE OR REPLACE VIEW gold.report_products AS
 WITH base_query AS(
 /*--------------------------------------------------------------------------
 1) Base Query: Retrieves core columns from tables
